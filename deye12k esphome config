@@ -13,7 +13,12 @@ esp32:
     type: arduino
 
 # Enable logging
+debug:
+    update_interval: 5s
+
+# Enable logging
 logger:
+  level: debug
 
 # Enable Home Assistant API
 api:
@@ -185,26 +190,34 @@ binary_sensor:
      bitmask: 0x1
  
 text_sensor:
-   - platform: modbus_controller
-     modbus_controller_id: ${modbus_controller_id}
-     skip_updates: 2
-     id: ${device_type}_Running_Status
-     bitmask: 0
-     register_type: holding
-     address: 500
-     raw_encode: HEXBYTES
-     name: ${device_type}-Running Status
-     lambda: |-
-       uint16_t value = modbus_controller::word_from_hex_str(x, 0);
-       switch (value) {
-         case 0: return std::string("standby");
-         case 1: return std::string("selfcheck");
-         case 2: return std::string("normal");
-         case 3: return std::string("alarm");
-         case 4: return std::string("fault");
-         default: return std::string("----");
-       }
-       return x;
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_id}
+    skip_updates: 2
+    id: ${device_type}_Running_Status
+    bitmask: 0
+    register_type: holding
+    address: 500
+    raw_encode: HEXBYTES
+    name: ${device_type}-Running Status
+    lambda: |-
+      uint16_t value = modbus_controller::word_from_hex_str(x, 0);
+      switch (value) {
+        case 0: return std::string("standby");
+        case 1: return std::string("selfcheck");
+        case 2: return std::string("normal");
+        case 3: return std::string("alarm");
+        case 4: return std::string("fault");
+        default: return std::string("----");
+      }
+      return x;
+
+# Debug # Debug # Debug # Debug # Debug # Debug # Debug # Debug # Debug # Debug # Debug # Debug #
+  - platform: debug
+    device:
+      name: "Device Info"
+    reset_reason:
+      name: "Reset Reason"
+# Debug # Debug # Debug # Debug # Debug # Debug # Debug # Debug # Debug # Debug # Debug # Debug #
 
 number:
   - platform: modbus_controller
@@ -417,6 +430,86 @@ number:
     step: 5
     value_type: U_WORD
 
+## Time of use V Level
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: ${modbus_controller_id}
+    id: ${device_type}_time_point_1_voltage
+    name: "${device_type}-Time point 1 Voltage"
+    address: 160  
+    unit_of_measurement: "V"
+ #   min_value: 0
+ #   max_value: 6300
+    step: 0.01
+    multiply: 100
+    value_type: U_WORD
+
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: ${modbus_controller_id}
+    id: ${device_type}_time_point_2_voltage
+    name: "${device_type}-Time point 2 Voltage"
+    address: 161  
+    unit_of_measurement: "V"
+#    min_value: 0
+#    max_value: 6300
+    step: 0.01
+    multiply: 100
+    value_type: U_WORD
+
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: ${modbus_controller_id}
+    id: ${device_type}_time_point_3_voltage
+    name: "${device_type}-Time point 3 Voltage"
+    address: 162  
+    unit_of_measurement: "V"
+#    min_value: 0
+#    max_value: 6300
+    step: 0.01
+    multiply: 100
+    value_type: U_WORD
+
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: ${modbus_controller_id}
+    id: ${device_type}_time_point_4_voltage
+    name: "${device_type}-Time point 4 Voltage"
+    address: 163  
+    unit_of_measurement: "V"
+#    min_value: 0
+#    max_value: 6300
+    step: 0.01
+    multiply: 100
+    value_type: U_WORD
+
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: ${modbus_controller_id}
+    id: ${device_type}_time_point_5_voltage
+    name: "${device_type}-Time point 5 Voltage"
+    address: 164  
+    unit_of_measurement: "V"
+#    min_value: 0
+#    max_value: 6300
+    step: 0.01
+    multiply: 100
+    value_type: U_WORD
+
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: ${modbus_controller_id}
+    id: ${device_type}_time_point_6_voltage
+    name: "${device_type}-Time point 6 Voltage"
+    address: 165  
+    unit_of_measurement: "V"
+#    min_value: 0
+#    max_value: 6300
+    step: 0.01
+    multiply: 100
+    value_type: U_WORD
+
+## Solar Power
   - platform: modbus_controller
     use_write_multiple: true
     modbus_controller_id: ${modbus_controller_id}
@@ -426,7 +519,85 @@ number:
     address: 340
     value_type: U_WORD
 
+## SmartPort Settings
+### Relais Setting
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: ${modbus_controller_id}
+    id: ${device_type}_smartload_open_delay
+    name: "${device_type}-Smartload Open Delay"
+    address: 192
+    min_value: 0
+    max_value: 120
+    step: 1
+    value_type: U_WORD
+
+### Voltage Based
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: ${modbus_controller_id}
+    id: ${device_type}_smartload_off_batt_voltage
+    name: "${device_type}-SmartLoad Batt Off Voltage"
+    address: 134
+    unit_of_measurement: "V"
+    min_value: 38.00
+    max_value: 63.00
+    step: 0.01
+    multiply: 100
+    value_type: U_WORD
+
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: ${modbus_controller_id}
+    id: ${device_type}_smartload_on_batt_voltage
+    name: "${device_type}-SmartLoad Batt On Voltage"
+    address: 136
+    unit_of_measurement: "V"
+    min_value: 38.00
+    max_value: 63.00
+    step: 0.01
+    multiply: 100
+    value_type: U_WORD
+
+### Capacity Based
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: ${modbus_controller_id}
+    id: ${device_type}_smartload_off_batt_capacity
+    name: "${device_type}-Smartload Off Batt Capacity"
+    unit_of_measurement: "%"
+    address: 135
+    min_value: 0
+    max_value: 100
+    step: 5
+    value_type: U_WORD
+
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: ${modbus_controller_id}
+    id: ${device_type}_smartload_on_batt_capacity
+    name: "${device_type}-Smartload On Batt Capacity"
+    unit_of_measurement: "%"
+    address: 137
+    min_value: 0
+    max_value: 100
+    step: 5
+    value_type: U_WORD
+
 sensor:
+#  Debug # Debug # Debug # Debug # Debug # Debug # Debug # Debug # Debug # Debug # Debug # Debug #
+  - platform: debug
+    free:
+      name: "Heap Free"
+# ESP8266 only
+#    fragmentation:
+#      name: "Heap Fragmentation"
+    block:
+      name: "Heap Max Block"
+    loop_time:
+      name: "Loop Time"
+#  Debug # Debug # Debug # Debug # Debug # Debug # Debug # Debug # Debug # Debug # Debug # Debug #
+
   - platform: modbus_controller
     modbus_controller_id: ${modbus_controller_id}
     name: "${device_type}-Heat sink temperature"
@@ -670,6 +841,7 @@ sensor:
     filters:
       - multiply: 0.1
  
+ ## Grid Port Values
   - platform: modbus_controller
     modbus_controller_id: ${modbus_controller_id}
     skip_updates: 2
@@ -752,8 +924,98 @@ sensor:
     accuracy_decimals: 0
     filters:
       - multiply: 0.1
-    value_type: U_WORD  
+    value_type: U_WORD 
 
+## Gen Port
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_id}
+    skip_updates: 2
+    name: "${device_type}-Gen Port Voltage L1"
+    id: ${device_type}_Gen_Port_Voltage_L1
+    register_type: holding
+    address: 661
+    unit_of_measurement: "V"
+    state_class: "measurement"
+    accuracy_decimals: 0
+    filters:
+      - multiply: 0.1
+    value_type: U_WORD     
+ 
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_id}
+    skip_updates: 2
+    name: "${device_type}-Gen Port Voltage L2"
+    id: ${device_type}_Gen_Port_Voltage_L2
+    register_type: holding
+    address: 662
+    unit_of_measurement: "V"
+    state_class: "measurement"
+    accuracy_decimals: 0
+    filters:
+      - multiply: 0.1
+    value_type: U_WORD     
+ 
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_id}
+    skip_updates: 2
+    name: "${device_type}-Gen Port Voltage L3"
+    id: ${device_type}_Gen_Port_Voltage_L3
+    register_type: holding
+    address: 663
+    unit_of_measurement: "V"
+    state_class: "measurement"
+    accuracy_decimals: 0
+    filters:
+      - multiply: 0.1
+    value_type: U_WORD 
+
+  #Gen Port Power
+
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_id}
+    name: "${device_type}-Gen Total Power" 
+    id: ${device_type}_gen_port_totalpower
+    register_type: holding
+    address: 667
+    unit_of_measurement: "W"
+    state_class: "measurement"
+    accuracy_decimals: 0
+    value_type: S_WORD
+
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_id}
+    name: "${device_type}-Gen Port Power A" 
+    id: ${device_type}_gen_port_power_a
+    register_type: holding
+    address: 664
+    unit_of_measurement: "W"
+    state_class: "measurement"
+    accuracy_decimals: 0
+    value_type: S_WORD
+
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_id}
+    name: "${device_type}-Gen Port Power B" 
+    id: ${device_type}_gen_port_power_b
+    register_type: holding
+    address: 665
+    unit_of_measurement: "W"
+    state_class: "measurement"
+    accuracy_decimals: 0
+    value_type: S_WORD
+
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_id}
+    name: "${device_type}-Gen Port Power C" 
+    id: ${device_type}_gen_port_power_c
+    register_type: holding
+    address: 666
+    unit_of_measurement: "W"
+    state_class: "measurement"
+    accuracy_decimals: 0
+    value_type: S_WORD
+
+## Internal CTs
  
   - platform: modbus_controller
     modbus_controller_id: ${modbus_controller_id}
@@ -1044,3 +1306,15 @@ select:
       "Selling first": 0
       "Zero export to load": 1
       "Zero export to CT": 2
+
+## Gen Settings / SmartLoad
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: ${modbus_controller_id}
+    name: "${device_type}-Grid Port Setting"
+    address: 133
+    value_type: U_WORD
+    optionsmap:
+      "Gen use": 0
+      "Smart Load Output": 1
+      "Microinverter": 2

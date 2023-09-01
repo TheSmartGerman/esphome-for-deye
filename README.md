@@ -40,3 +40,17 @@ For the card i use for the time of use settings like the inverters interface. Us
 * https://github.com/klatremis/esphome-for-deye/blob/main/time%20of%20use%20card
 
 
+## Added Time of Use Card based on Voltage
+If you are using User Defined Batteries you have to use the voltage. I added the nesseccary ModBus registers and Use Card template
+
+## Added GenPort Settings & Monitoring
+Set Mode of GenPort
+In case of SmartPort use: Controll Start and Stop Voltage. 
+
+## Added ESP32 Debugging
+Monitor ESP32 resources
+
+## Other intersting Forks
+ESP8266 for Deye
+* https://github.com/pvprodk/esp8266-for-deye
+

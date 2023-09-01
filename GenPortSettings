@@ -1,0 +1,11 @@
+type: entities
+entities:
+  - entity: select.esphome_web_7c7738_sun12k_grid_port_setting
+    name: sun12k-Grid Port Setting
+  - entity: number.esphome_web_7c7738_sun12k_smartload_batt_off_voltage
+    name: sun12k-SmartLoad Batt Off Voltage
+  - entity: number.esphome_web_7c7738_sun12k_smartload_batt_on_voltage
+    name: sun12k-SmartLoad Batt On Voltage
+  - entity: number.esphome_web_7c7738_sun12k_smartload_open_delay
+    name: sun12k-Smartload Open Delay
+title: SmartPort Settings
