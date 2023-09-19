@@ -16,7 +16,7 @@ entities:
       - entity: number.esphome_web_7c7738_sun12k_time_point_1_voltage
         name: Volt
         format: precision2
-  - entity: switch.esphome_web_7c7738_sun12k_time_point_1_charge_enable
+  - entity: switch.esphome_web_7c7738_sun12k_time_point_2_charge_enable
     type: custom:multiple-entity-row
     name: Timeslot 2
     toggle: true
