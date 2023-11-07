@@ -43,6 +43,10 @@ For the card i use for the time of use settings like the inverters interface. Us
 ## Added Time of Use Card based on Voltage
 If you are using User Defined Batteries you have to use the voltage. I added the nesseccary ModBus registers and Use Card template
 
+### Time of Use Card - SOC based
+![image](https://github.com/TheSmartGerman/esphome-for-deye/assets/9676982/680d9f9c-1146-4e8a-9e0a-75c91c5300c9)
+
+
 ## Added GenPort Settings & Monitoring
 Set Mode of GenPort
 In case of SmartPort use: Controll Start and Stop Voltage. 
