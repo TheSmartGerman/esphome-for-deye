@@ -47,6 +47,9 @@ If you are using User Defined Batteries you have to use the voltage. I added the
 Set Mode of GenPort
 In case of SmartPort use: Controll Start and Stop Voltage. 
 
+![image](https://github.com/TheSmartGerman/esphome-for-deye/assets/9676982/bcb91ec1-208d-4e51-8f90-955606a1f915)
+
+
 ## Added ESP32 Debugging
 Monitor ESP32 resources
 
