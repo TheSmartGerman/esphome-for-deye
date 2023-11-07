@@ -57,7 +57,10 @@ In case of SmartPort use: Controll Start and Stop Voltage.
 ## Added ESP32 Debugging
 Monitor ESP32 resources
 
-## Other intersting Forks
+![image](https://github.com/TheSmartGerman/esphome-for-deye/assets/9676982/e056c1c7-8388-4aeb-bf58-4720be67b9e4)
+
+
+## Other interesting Forks
 ESP8266 for Deye
 * https://github.com/pvprodk/esp8266-for-deye
 
