@@ -1375,6 +1375,34 @@ sensor:
     value_type: S_WORD
     
 select:
+    # 98 - 0 / 111 - 0 -> Lithium (BMS)
+    # 98 - 1 / 111 - 1 -> Use V
+    # 98 - 1 / 111 - 2 -> Use %
+    # 98 - 1 / 111 - 3 -> No Bat
+  
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: ${modbus_controller_id}
+    name: "${device_type} Control Mode"
+    id: ${device_type}_control_mode
+    address: 98
+    value_type: U_WORD
+    optionsmap:
+      "Lithium Battery": 0
+      "Lead Battery": 1
+
+  - platform: modbus_controller
+    use_write_multiple: true
+    modbus_controller_id: ${modbus_controller_id}
+    name: "${device_type} Battery Operation"
+    id: ${device_type}_battery_operation
+    address: 111
+    value_type: U_WORD
+    optionsmap:
+      "Use V": 0
+      "Use %": 1
+      "No Bat": 2
+
   - platform: modbus_controller
     use_write_multiple: true
     modbus_controller_id: ${modbus_controller_id}
